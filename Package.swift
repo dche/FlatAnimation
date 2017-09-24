@@ -1,15 +1,36 @@
+// swift-tools-version:4.0
 //
 // FlatAnimation - Animation.swift.
 //
-// Copyright (c) 2016 The FlatAnimation authors.
+// Copyright (c) 2017 The FlatAnimation authors.
 // Licensed under MIT License.
 
 import PackageDescription
 
 let package = Package(
     name: "FlatAnimation",
+    products: [
+        .library(
+            name: "FlatAnimation",
+            targets: ["FlatAnimation"]
+        )
+    ],
     dependencies: [
-        .Package(url: "https://github.com/dche/GLMath.git",
-                 majorVersion: 0),
+        .package(
+            url: "https://github.com/dche/GLMath.git",
+            .branch("master")
+        )
+    ],
+    targets: [
+        .target(
+            name: "FlatAnimation",
+            dependencies: ["GLMath"],
+            path: "Sources"
+        ),
+        .testTarget(
+            name: "FlatAnimationTests",
+            dependencies: ["FlatAnimation"],
+            path: "Tests/FlatAnimationTests"
+        )
     ]
 )
