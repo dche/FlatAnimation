@@ -1,7 +1,7 @@
 //
 // FlatAnimation - Animation.swift.
 //
-// Copyright (c) 2016 The FlatAnimation authors.
+// Copyright (c) 2017 The FlatAnimation authors.
 // Licensed under MIT License.
 
 public protocol AnimationData {
@@ -34,14 +34,14 @@ public struct Animation<T: AnimationData> {
     /// sampling underlying `AnimationData`.
     ///
     /// - parameter data: The `AnimationData` to be sampled.
-    /// - parameter duration: Duration of the one pass of sampling. 
-    /// If this value is less than `2`, then the sampling is always at 
-    /// sample position `0.0`.
+    /// - parameter duration: Duration of the one pass of sampling.
+    ///   If this value is less than `2`, then the sampling is always at
+    ///   sample position `0.0`.
     /// - parameter reversible: If `repeatition` is larger than `1`, this
-    /// parameter decides that after sample position reaches `1.0`, if it
-    /// should decrease, instead of resetting to `0.0`.
+    ///   parameter decides that after sample position reaches `1.0`, if it
+    ///   should decrease, instead of resetting to `0.0`.
     /// - parameter repeatition: How many times the sampling process shall
-    /// be repeated.
+    ///   be repeated.
     public init (
         data: T,
         duration: UInt64 = 1,
@@ -81,8 +81,8 @@ public struct Animation<T: AnimationData> {
     /// Resets the receiver's sampling state as if it was new created.
     ///
     /// - note: After `reset`, `repeatition` is set to current `repeatition`
-    /// value, which may be different than the value you specified when 
-    /// construction.
+    ///   value, which may be different than the value you specified when
+    ///   construction.
     public mutating func reset() {
         _tick = 0
         guard let splr = _sampler else { return }

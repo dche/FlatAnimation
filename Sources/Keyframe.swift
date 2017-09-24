@@ -1,7 +1,7 @@
 //
 // FlatAnimation - Animation.swift.
 //
-// Copyright (c) 2016 The FlatAnimation authors.
+// Copyright (c) 2017 The FlatAnimation authors.
 // Licensed under MIT License.
 
 import simd
@@ -37,8 +37,10 @@ public struct Keyframe<T: Interpolatable> {
 }
 
 
-public struct KeyframeData<T: Interpolatable>: AnimationData where T.NumberType: BaseFloat {
-
+public struct KeyframeData<T: Interpolatable>: AnimationData
+    where
+    T.InterpolatableNumber: BaseFloat
+{
     public typealias ValueType = T
 
     /// Value of first frame.
@@ -78,14 +80,14 @@ public struct KeyframeData<T: Interpolatable>: AnimationData where T.NumberType:
         var t0 = 0.0
         while i < fractions.count {
             if t < fractions[i] {
-                let nt = T.NumberType(frames[i].curve((t - t0) / (fractions[i] - t0)))
-                return from.interpolate(between: frames[i].frame, t: nt)
+                let nt = T.InterpolatableNumber(frames[i].curve((t - t0) / (fractions[i] - t0)))
+                return from.interpolate(frames[i].frame, t: nt)
             }
             from = frames[i].frame
             t0 = fractions[i]
             i += 1
         }
-        let nt = T.NumberType(frames.last!.curve((t - t0) / (1 - t0)))
-        return from.interpolate(between: frames.last!.frame, t: nt)
+        let nt = T.InterpolatableNumber(frames.last!.curve((t - t0) / (1 - t0)))
+        return from.interpolate(frames.last!.frame, t: nt)
     }
 }
