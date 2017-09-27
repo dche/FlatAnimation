@@ -4,7 +4,12 @@
 // Copyright (c) 2017 The FlatAnimation authors.
 // Licensed under MIT License.
 
-import simd
+#if os(Linux)
+    import Glibc
+#else
+    import simd
+#endif
+
 import GLMath
 
 public struct Tween<T: Interpolatable>: AnimationData

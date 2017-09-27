@@ -4,7 +4,11 @@
 // Copyright (c) 2016 The FlatAnimation authors.
 // Licensed under MIT License.
 
-import Darwin
+#if os(Linux)
+    import Glibc
+#else
+    import simd
+#endif
 
 enum SampleDirection: Int {
     case forward = 1, backward = -1
