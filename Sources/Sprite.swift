@@ -4,7 +4,12 @@
 // Copyright (c) 2016 The FlatAnimation authors.
 // Licensed under MIT License.
 
-import simd
+#if os(Linux)
+    import Glibc
+#else
+    import simd
+#endif
+
 import GLMath
 
 /// The simplest animation type that gets its value by ...
