@@ -12,16 +12,15 @@
 
 import GLMath
 
-///
 public struct Keyframe<T: Interpolatable> {
 
-    /// Target value of this `Frame`.
+    /// Target value of this _frame_.
     public let frame: T
 
-    /// Duration from previous `Frame` to `self`.
+    /// Duration from previous _frame to this _frame_.
     public let duration: UInt64
 
-    /// Interpolation curve used in this `Keyframe`.
+    /// Interpolation curve used in this _frame.
     public let curve: (Double) -> Double
 
     /// Constructs a `Keyframe`.
@@ -46,9 +45,9 @@ public struct KeyframeData<T: Interpolatable>: AnimationData
     where
     T.InterpolatableNumber: BaseFloat
 {
-    public typealias ValueType = T
+    public typealias Value = T
 
-    /// Value of first frame.
+    /// Start value of the first frame.
     let first: T
 
     let frames: [Keyframe<T>]
@@ -67,9 +66,12 @@ public struct KeyframeData<T: Interpolatable>: AnimationData
             self.fractions = []
         } else {
             let ds = frames.map { Double($0.duration) / Double(duration) }
-            var fs: [Double] = [ds.first!]
-            for i in 1 ..< ds.count - 1 {
-                fs.append(fs.last! + ds[i])
+            var fs = [Double](repeating: 0.0, count: ds.count - 1)
+            if ds.count > 1 {
+                fs[0] = ds.first!
+                for i in 1 ..< ds.count - 1 {
+                    fs[i] = fs[i - 1] + ds[i]
+                }
             }
             self.fractions = fs
         }
