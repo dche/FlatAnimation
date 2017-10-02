@@ -12,10 +12,9 @@
 
 import GLMath
 
-/// The simplest animation type that gets its value by ...
 public struct SpriteData<T>: AnimationData {
 
-    public typealias ValueType = T
+    public typealias Value = T
 
     public let sprites: [T]
 
