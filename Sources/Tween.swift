@@ -12,8 +12,11 @@
 
 import GLMath
 
-public struct Tween<T: Interpolatable>: AnimationData {
-
+public struct Tween<T>: AnimationData
+    where
+    T: Interpolatable,
+    T.InterpolatableNumber: BinaryFloatingPoint
+{
     public typealias Value = T
 
     public let from: T
@@ -39,7 +42,11 @@ public struct Tween<T: Interpolatable>: AnimationData {
     }
 }
 
-extension Animation where T.Value: Interpolatable {
+extension Animation
+    where
+    T.Value: Interpolatable,
+    T.Value.InterpolatableNumber: BinaryFloatingPoint
+{
 
     func tween(from: UInt64, to: Value, duration: UInt64) -> Animation<Tween<Value>> {
         let tween = Tween(from: self.sample(at: from), to: to)
